@@ -15,6 +15,7 @@ const PORT: String = process.env.APP_PORT || '3001';
 
 app.use(cors());
 app.use(errorHandler.bodyParser);
+app.use(express.json({ limit: '50mb' }));
 
 // API Routes
 app.use('/api', router);
