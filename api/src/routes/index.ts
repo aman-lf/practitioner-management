@@ -1,12 +1,12 @@
 import { NextFunction, Request, Response, Router } from 'express';
 
 import userRoutes from './userRoutes';
-import * as userController from '../controllers/userController';
+import practitionerRoutes from './practitionerRoutes';
 
 const router: Router = Router();
 
 /**
- * get /api/
+ * get /api
  */
 router.get('/', (req: Request, res: Response, next: NextFunction) => {
   res.json({
@@ -15,5 +15,6 @@ router.get('/', (req: Request, res: Response, next: NextFunction) => {
 });
 
 router.use('/', userRoutes); // User router
+router.use('/practitioner', practitionerRoutes); // Practitioner router
 
 export default router;
