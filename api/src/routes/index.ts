@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response, Router } from 'express';
 
 import userRoutes from './userRoutes';
+import verifyToken from '../middlewares/auth';
 import practitionerRoutes from './practitionerRoutes';
 
 const router: Router = Router();
@@ -15,6 +16,6 @@ router.get('/', (req: Request, res: Response, next: NextFunction) => {
 });
 
 router.use('/', userRoutes); // User router
-router.use('/practitioner', practitionerRoutes); // Practitioner router
+router.use('/practitioner', verifyToken, practitionerRoutes); // Practitioner router
 
 export default router;
