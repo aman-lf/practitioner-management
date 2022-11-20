@@ -1,5 +1,6 @@
 import { Router } from 'express';
 
+import { userValidator } from '../validators/userValidator';
 import * as userController from '../controllers/userController';
 
 const router = Router();
@@ -7,12 +8,12 @@ const router = Router();
 /**
  * post /api/signup
  */
-router.post('/signup', userController.createUser);
+router.post('/signup', userValidator, userController.createUser);
 
 /**
  * post /api/signin
  */
-router.post('/signin', userController.userLogin);
+router.post('/signin', userValidator, userController.userLogin);
 
 /**
  * get /api/users
