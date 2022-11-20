@@ -59,6 +59,6 @@ export const loginUser = async (email: string, password: string): Promise<Object
     }
 
     // Throw error if email or password incorrect
-    throw Boom.notFound('Email or Password incorrect');
+    throw Boom.unauthorized('Email or Password incorrect');
   });
 };
