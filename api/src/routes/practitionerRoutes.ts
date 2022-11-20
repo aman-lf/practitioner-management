@@ -10,6 +10,11 @@ const router = Router();
 router.get('/', practitionerController.getAllPractitioners);
 
 /**
+ * get /api/practitioner/{:practitioner_id}
+ */
+router.get('/:id', practitionerController.getPractitionerById);
+
+/**
  * post /api/practitioner
  */
 router.post('/', practitionerController.createPractitioner);

@@ -21,9 +21,9 @@ export const getAllPractitioners = (req: Request, res: Response, next: NextFunct
  * @returns Promise
  */
 export const getPractitionerById = (req: Request, res: Response, next: NextFunction) => {
-  const { id } = req.body;
+  const { id } = req.params;
   practitionerService
-    .getPractitionerById(id)
+    .getPractitionerById(+id)
     .then((data) => res.json(data))
     .catch((err) => next(err));
 };
