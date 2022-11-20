@@ -1,3 +1,5 @@
+import Boom from '@hapi/boom';
+
 import Practitioner from '../models/practitioner';
 import { PractitionerInterface, PractitionerToCreate } from '../interfaces/PractitionerInterface';
 
@@ -17,10 +19,12 @@ export const getAllPractitioners = async (): Promise<Object> => {
  * @returns Promise
  */
 export const getPractitionerById = async (id: number): Promise<Object> => {
-  return Practitioner.getPractitionerById(id).then((practitioner) => ({
-    data: practitioner,
-    message: 'Successfully retrieved a practitioner',
-  }));
+  return Practitioner.getPractitionerById(id).then((practitioner) => {
+    if (!practitioner) {
+      throw Boom.notFound('Practitioner not found. Invalid id');
+    }
+    return { data: practitioner, message: 'Successfully retrieved a practitioner' };
+  });
 };
 
 /**

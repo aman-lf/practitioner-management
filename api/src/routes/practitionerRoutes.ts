@@ -1,5 +1,6 @@
 import { Router } from 'express';
 
+import { findPractitioner, practitionerValidator } from '../validators/practitionerValidator';
 import * as practitionerController from '../controllers/practitionerController';
 
 const router = Router();
@@ -12,21 +13,21 @@ router.get('/', practitionerController.getAllPractitioners);
 /**
  * get /api/practitioner/{:practitioner_id}
  */
-router.get('/:id', practitionerController.getPractitionerById);
+router.get('/:id', findPractitioner, practitionerController.getPractitionerById);
 
 /**
  * post /api/practitioner
  */
-router.post('/', practitionerController.createPractitioner);
+router.post('/', practitionerValidator, practitionerController.createPractitioner);
 
 /**
  * put /api/practitioner/{:practitioner_id}
  */
-router.put('/:id', practitionerController.updatePractitioner);
+router.put('/:id', findPractitioner, practitionerValidator, practitionerController.updatePractitioner);
 
 /**
  * delete /api/practitioner/{:practitioner_id}
  */
-router.delete('/:id', practitionerController.deletePractitioner);
+router.delete('/:id', findPractitioner, practitionerController.deletePractitioner);
 
 export default router;
