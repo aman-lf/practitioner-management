@@ -1,7 +1,15 @@
 import Boom from '@hapi/boom';
 
 import Practitioner from '../models/practitioner';
+import { upload } from '../firebase';
 import { PractitionerInterface, PractitionerToCreate } from '../interfaces/PractitionerInterface';
+
+const uploadImage = (file, name) => {
+  const ext = file.originalname.split('.').pop();
+  const filename = `${name}_${Date.now()}.${ext}`;
+
+  upload(filename, file); // Uploading file to firebase
+};
 
 /**
  * Get all practitioners
@@ -32,8 +40,14 @@ export const getPractitionerById = async (id: number): Promise<Object> => {
  * @param  {PractitionerToCreate} practitioner
  * @returns Promise
  */
-export const createPractitioner = async (practitioner: PractitionerToCreate): Promise<object> => {
-  return Practitioner.createPractitioner(practitioner).then((data) => ({
+export const createPractitioner = async (
+  practitioner: PractitionerToCreate,
+  file: Express.Multer.File
+): Promise<object> => {
+  const filename = uploadImage(file, practitioner.name);
+  const practitionerWithPhoto = { ...practitioner, photo: filename };
+
+  return Practitioner.createPractitioner(practitionerWithPhoto).then((data) => ({
     data,
     message: 'Successfully created a practitioner.',
   }));
@@ -44,8 +58,15 @@ export const createPractitioner = async (practitioner: PractitionerToCreate): Pr
  * @param  {PractitionerToCreate} practitioner
  * @returns Promise
  */
-export const updatePractitioner = async (id: number, practitioner: PractitionerInterface): Promise<object> => {
-  return Practitioner.updatePractitioner(id, practitioner).then((practitioner) => ({
+export const updatePractitioner = async (
+  id: number,
+  practitioner: PractitionerInterface,
+  file: Express.Multer.File
+): Promise<object> => {
+  const filename = uploadImage(file, practitioner.name);
+  const practitionerWithPhoto = { ...practitioner, photo: filename };
+
+  return Practitioner.updatePractitioner(id, practitionerWithPhoto).then((practitioner) => ({
     data: practitioner,
     message: 'Successfully updated a practitioner.',
   }));

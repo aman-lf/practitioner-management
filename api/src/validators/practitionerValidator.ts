@@ -14,6 +14,7 @@ const schema = Joi.object({
   start_time: Joi.date().allow(null, ''),
   end_time: Joi.date().allow(null, ''),
   is_specialist: Joi.boolean().allow(null, ''),
+  photo: Joi.any().allow(null, ''),
 });
 
 /**

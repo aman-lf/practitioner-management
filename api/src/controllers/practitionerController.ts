@@ -36,7 +36,7 @@ export const getPractitionerById = (req: Request, res: Response, next: NextFunct
  */
 export const createPractitioner = (req: Request, res: Response, next: NextFunction) => {
   practitionerService
-    .createPractitioner(req.body)
+    .createPractitioner(req.body, req.file)
     .then((data) => res.status(HttpStatus.CREATED).json(data))
     .catch((error) => next(error));
 };
@@ -50,7 +50,7 @@ export const createPractitioner = (req: Request, res: Response, next: NextFuncti
 export const updatePractitioner = (req: Request, res: Response, next: NextFunction) => {
   const { id } = req.params;
   practitionerService
-    .updatePractitioner(+id, req.body)
+    .updatePractitioner(+id, req.body, req.file)
     .then((data) => res.json(data))
     .catch((error) => next(error));
 };

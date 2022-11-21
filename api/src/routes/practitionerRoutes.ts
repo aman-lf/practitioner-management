@@ -1,3 +1,4 @@
+import multer from 'multer';
 import { Router } from 'express';
 
 import { findPractitioner, practitionerValidator } from '../validators/practitionerValidator';
@@ -18,12 +19,18 @@ router.get('/:id', findPractitioner, practitionerController.getPractitionerById)
 /**
  * post /api/practitioner
  */
-router.post('/', practitionerValidator, practitionerController.createPractitioner);
+router.post('/', multer().single('file'), practitionerValidator, practitionerController.createPractitioner);
 
 /**
  * put /api/practitioner/{:practitioner_id}
  */
-router.put('/:id', findPractitioner, practitionerValidator, practitionerController.updatePractitioner);
+router.put(
+  '/:id',
+  findPractitioner,
+  multer().single('file'),
+  practitionerValidator,
+  practitionerController.updatePractitioner
+);
 
 /**
  * delete /api/practitioner/{:practitioner_id}
