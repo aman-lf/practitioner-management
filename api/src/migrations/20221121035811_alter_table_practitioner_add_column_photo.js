@@ -1,5 +1,5 @@
 /**
- * Create table `practitioner `.
+ * Alter table `practitioner `. Add column photo.
  *
  * @param   {object} knex
  * @returns {Promise}
@@ -11,7 +11,7 @@ exports.up = function (knex) {
 };
 
 /**
- * Drop `practitioner `.
+ *Alter table `practitioner `. Drop column photo.
  *
  * @param   {object} knex
  * @returns {Promise}

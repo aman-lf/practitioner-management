@@ -1,8 +1,9 @@
 import multer from 'multer';
 import { Router } from 'express';
 
-import { findPractitioner, practitionerValidator } from '../validators/practitionerValidator';
+import multerMilddleware from '../middlewares/multer';
 import * as practitionerController from '../controllers/practitionerController';
+import { findPractitioner, practitionerValidator } from '../validators/practitionerValidator';
 
 const router = Router();
 
@@ -19,7 +20,7 @@ router.get('/:id', findPractitioner, practitionerController.getPractitionerById)
 /**
  * post /api/practitioner
  */
-router.post('/', multer().single('file'), practitionerValidator, practitionerController.createPractitioner);
+router.post('/', multerMilddleware.single('file'), practitionerValidator, practitionerController.createPractitioner);
 
 /**
  * put /api/practitioner/{:practitioner_id}
@@ -27,7 +28,7 @@ router.post('/', multer().single('file'), practitionerValidator, practitionerCon
 router.put(
   '/:id',
   findPractitioner,
-  multer().single('file'),
+  multerMilddleware.single('file'),
   practitionerValidator,
   practitionerController.updatePractitioner
 );
