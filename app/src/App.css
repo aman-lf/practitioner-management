@@ -58,6 +58,7 @@
   height: 100vh;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .user-form {
@@ -67,4 +68,21 @@
 .user-form div {
   text-align: left;
   margin-bottom: 1rem;
+}
+
+/* Image */
+.image-display {
+  width: 200px;
+  height: 200px;
+  border-radius: 100%;
+  border: 1px solid;
+  object-fit: scale-down;
+}
+
+.home-image-display {
+  width: 36px;
+  height: 36px;
+  margin-right: 1rem;
+  border-radius: 100%;
+  object-fit: scale-down;
 }
