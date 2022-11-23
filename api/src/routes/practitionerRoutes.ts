@@ -25,13 +25,7 @@ router.post('/', multerMilddleware.single('file'), practitionerValidator, practi
 /**
  * put /api/practitioner/{:practitioner_id}
  */
-router.put(
-  '/:id',
-  findPractitioner,
-  multerMilddleware.single('file'),
-  practitionerValidator,
-  practitionerController.updatePractitioner
-);
+router.put('/:id', findPractitioner, multerMilddleware.single('file'), practitionerController.updatePractitioner);
 
 /**
  * delete /api/practitioner/{:practitioner_id}

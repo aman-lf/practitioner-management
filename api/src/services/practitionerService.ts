@@ -4,11 +4,12 @@ import Practitioner from '../models/practitioner';
 import { upload } from '../firebase';
 import { PractitionerInterface, PractitionerToCreate } from '../interfaces/PractitionerInterface';
 
-const uploadImage = (file, name) => {
+const uploadImage = (file, name): string => {
   const ext = file.originalname.split('.').pop();
   const filename = `${name}_${Date.now()}.${ext}`;
 
   upload(filename, file); // Uploading file to firebase
+  return filename;
 };
 
 /**
@@ -44,9 +45,11 @@ export const createPractitioner = async (
   practitioner: PractitionerToCreate,
   file: Express.Multer.File
 ): Promise<object> => {
-  const filename = uploadImage(file, practitioner.name);
-  const practitionerWithPhoto = { ...practitioner, photo: filename };
-
+  let practitionerWithPhoto = practitioner;
+  if (file) {
+    const filename = uploadImage(file, practitioner.name);
+    practitionerWithPhoto = { ...practitioner, photo: filename };
+  }
   return Practitioner.createPractitioner(practitionerWithPhoto).then((data) => ({
     data,
     message: 'Successfully created a practitioner.',
@@ -63,8 +66,11 @@ export const updatePractitioner = async (
   practitioner: PractitionerInterface,
   file: Express.Multer.File
 ): Promise<object> => {
-  const filename = uploadImage(file, practitioner.name);
-  const practitionerWithPhoto = { ...practitioner, photo: filename };
+  let practitionerWithPhoto = practitioner;
+  if (file) {
+    const filename = uploadImage(file, practitioner.name);
+    practitionerWithPhoto = { ...practitioner, photo: filename };
+  }
 
   return Practitioner.updatePractitioner(id, practitionerWithPhoto).then((practitioner) => ({
     data: practitioner,
