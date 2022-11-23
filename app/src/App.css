@@ -1,3 +1,8 @@
+:root {
+  --blue: #0d6efd;
+  --skyblue: #5b8bde;
+}
+
 .App {
   text-align: center;
 }
@@ -35,4 +40,31 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.bg-blue {
+  background-color: var(--blue) !important;
+}
+
+.bg-skyblue {
+  background-color: var(--skyblue) ;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.col-center {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.user-form {
+  text-align: center;
+}
+
+.user-form div {
+  text-align: left;
+  margin-bottom: 1rem;
 }
