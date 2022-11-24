@@ -45,12 +45,12 @@ export const createPractitioner = async (
   practitioner: PractitionerToCreate,
   file: Express.Multer.File
 ): Promise<object> => {
-  let practitionerWithPhoto = practitioner;
+  let practitionerUpdated = practitioner;
   if (file) {
     const filename = uploadImage(file, practitioner.name);
-    practitionerWithPhoto = { ...practitioner, photo: filename };
+    practitionerUpdated = { ...practitioner, photo: filename };
   }
-  return Practitioner.createPractitioner(practitionerWithPhoto).then((data) => ({
+  return Practitioner.createPractitioner(practitionerUpdated).then((data) => ({
     data,
     message: 'Successfully created a practitioner.',
   }));
@@ -66,13 +66,16 @@ export const updatePractitioner = async (
   practitioner: PractitionerInterface,
   file: Express.Multer.File
 ): Promise<object> => {
-  let practitionerWithPhoto = practitioner;
+  let practitionerUpdated = practitioner;
+  // converting string to json
+  if (practitioner['specialization'])
+    practitionerUpdated['specialization'] = JSON.parse(practitioner['specialization'].toString());
   if (file) {
     const filename = uploadImage(file, practitioner.name);
-    practitionerWithPhoto = { ...practitioner, photo: filename };
+    practitionerUpdated = { ...practitioner, photo: filename };
   }
-
-  return Practitioner.updatePractitioner(id, practitionerWithPhoto).then((practitioner) => ({
+  console.log(practitionerUpdated);
+  return Practitioner.updatePractitioner(id, practitionerUpdated).then((practitioner) => ({
     data: practitioner,
     message: 'Successfully updated a practitioner.',
   }));

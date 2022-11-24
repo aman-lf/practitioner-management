@@ -11,11 +11,15 @@ const schema = Joi.object({
   contact: Joi.string().allow(null, ''),
   dob: Joi.date().allow(null, ''),
   working_day: Joi.string().allow(null, ''),
-  start_time: Joi.date().allow(null, ''),
-  end_time: Joi.date().allow(null, ''),
-  is_specialist: Joi.boolean().allow(null, ''),
+  start_time: Joi.string()
+    .regex(/^([0-9]{2})\:([0-9]{2})$/)
+    .allow(null, ''),
+  end_time: Joi.string()
+    .regex(/^([0-9]{2})\:([0-9]{2})$/)
+    .allow(null, ''),
+  is_specialist: Joi.number().allow(null, ''),
   photo: Joi.any().allow(null, ''),
-  specialization: Joi.array(),
+  specialization: Joi.string().allow(null, ''),
 });
 
 /**
@@ -27,6 +31,7 @@ const schema = Joi.object({
  * @returns {Promise}
  */
 function practitionerValidator(req: Request, res: Response, next: NextFunction): Promise<void> {
+  console.log(req.body);
   return validate(req.body, schema)
     .then(() => next())
     .catch((err) => next(err));

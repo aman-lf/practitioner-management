@@ -41,7 +41,6 @@ class Practitioner {
    * @param  {object} practitioner
    */
   public static async updatePractitioner(id: number, practitioner: PractitionerInterface) {
-    console.log(practitioner);
     const updatedPractitioner = await db(Practitioner.table).where({ id }).update(practitioner).returning('*');
 
     return updatedPractitioner;
