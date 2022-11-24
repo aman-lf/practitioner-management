@@ -17,11 +17,13 @@ function App() {
             <Routes>
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/signin" element={<SignIn />} />
+                <Route path="/logout" element={<LogOut />} />
                 <Route path="/" element={<AppLayout />}>
                     <Route index element={<Home />} />
                     <Route path="/new" element={<AddPractitioner />} />
                     <Route path="/update/:id" element={<UpdatePractitioner />} />
                 </Route>
+                <Route path="*" element={<PageNotFound />} />
             </Routes>
         </div>
     );
