@@ -2,7 +2,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import express, { Application } from 'express';
 
-import router from './routes/';
+import router from './routes';
 import logger from './utils/logger';
 import * as errorHandler from './middlewares/errorHandler';
 
@@ -27,3 +27,5 @@ app.use(errorHandler.notFound);
 app.listen(PORT, () => {
   logger.info(`Server is running on port ${PORT}`);
 });
+
+export default app;
