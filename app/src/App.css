@@ -86,3 +86,11 @@
   border-radius: 100%;
   object-fit: scale-down;
 }
+
+/* toast */
+.position-top-right{
+  position: fixed;
+  right: 5px;
+  top: 5px;
+  z-index: 5;
+}

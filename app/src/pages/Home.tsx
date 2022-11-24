@@ -18,22 +18,31 @@ export default function Home() {
         });
     }, []);
 
-    const icuPractitioners = practitioners.filter(
-        (practitioner) => practitioner.is_specialist === 1
-    );
+    // Sort contact
+    function compare(a: IPractitioner, b: IPractitioner) {
+        if (a.name < b.name) {
+            return -1;
+        }
+        if (a.name > b.name) {
+            return 1;
+        }
+        return 0;
+    }
+    const icuPractitioners = practitioners
+        .filter((practitioner) => practitioner.is_specialist === 1)
+        .sort(compare);
     const nonIcuPractitioners = practitioners.filter(
         (practitioner) => practitioner.is_specialist !== 1
     );
 
     const updateSpecialist = (id: number, is_specialist: boolean) => () => {
-        api.updateSpecialist(id, is_specialist).then((r) => {
+        const set_specialist = is_specialist ? 1 : 0;
+        api.updateSpecialist(id, set_specialist).then((r) => {
             api.getPractitioner(id).then((res) => {
                 const newPractitioners = practitioners.map((practitioner) => {
-                    console.log(practitioner.id === id);
                     if (practitioner.id === id) return res.data.data;
                     return practitioner;
                 });
-                console.log("new: ", newPractitioners);
                 setPractitioners(newPractitioners);
             });
         });
@@ -41,9 +50,9 @@ export default function Home() {
 
     const deletePractitioner = (id: number) => () => {
         if (!window.confirm("Delete practitioners?")) return;
-        console.log(id);
+
         api.deletePractitioner(id).then((res) => {
-            if (res.status === 204) {
+            if (res.status === 202) {
                 const newPractitioners = practitioners.filter(
                     (practitioner) => practitioner.id !== id
                 );
@@ -100,15 +109,15 @@ export default function Home() {
                                 icon={faEdit}
                                 size={"1x"}
                                 className="mx-2 cursor-pointer"
-                                // onClick={() => {
-                                //     navigate(`/update/${practitioner.id}`);
-                                // }}
+                                onClick={() => {
+                                    navigate(`/update/${practitioner.id}`);
+                                }}
                             />
                             <FontAwesomeIcon
                                 icon={faTrash}
                                 size={"1x"}
                                 className="mx-2 cursor-pointer"
-                                // onClick={deletePractitioner(practitioner.id)}
+                                onClick={deletePractitioner(practitioner.id)}
                             />
                         </td>
                     </tr>

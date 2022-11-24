@@ -30,7 +30,6 @@ export default function SignIn(): ReactElement {
             setLoading(true);
             api.signin(email, password)
                 .then((res) => {
-                    console.log(res);
                     localStorage.setItem("token", res.data.data.accessToken);
                     navigate("../", { replace: true });
                 })
