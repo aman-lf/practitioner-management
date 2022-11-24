@@ -26,6 +26,16 @@ class User {
   }
 
   /**
+   * Get user by id
+   * @param  {number} id
+   */
+  public static async getUserById(id: number) {
+    const user = await db(User.table).where({ id }).first();
+
+    return user;
+  }
+
+  /**
    * Create user
    * @param  {UserToCreate} user
    */

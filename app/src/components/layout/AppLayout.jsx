@@ -3,8 +3,10 @@ import { Outlet } from "react-router-dom";
 
 import Sidebar from "../sidebar/Sidebar";
 import PrivateRoute from "../PrivateRoute";
+import jwtInterceptor from "../../_helpers/jwt.interceptor";
 
 const AppLayout = () => {
+    jwtInterceptor(); // axios request interceptor
     const [isOpen, setIsOpen] = useState(false); // Sidebar open state
 
     return (

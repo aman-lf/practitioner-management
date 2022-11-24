@@ -1,9 +1,11 @@
 import bcrypt from 'bcrypt';
 import Boom from '@hapi/boom';
 import jwt from 'jsonwebtoken';
+import jwt_decode from 'jwt-decode';
 
 import User from '../models/user';
 import { UserToCreate } from '../interfaces/userInterface';
+import logger from '../utils/logger';
 
 /**
  * Get all users
@@ -61,4 +63,26 @@ export const loginUser = async (email: string, password: string): Promise<Object
     // Throw error if email or password incorrect
     throw Boom.unauthorized('Email or Password incorrect');
   });
+};
+
+export const generateToken = async (refreshToken: string): Promise<Object> => {
+  try {
+    const decoded_user = jwt_decode(refreshToken);
+    const user = await User.getUserById(decoded_user['id']);
+
+    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET as string);
+    const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET as string, {
+      expiresIn: process.env.ACCESS_TOKEN_EXPIRE_TIME,
+    });
+    const newRefreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET as string);
+
+    return {
+      data: { accessToken, user, refreshToken: newRefreshToken },
+      message: 'Successfully retrieved new tokens',
+    };
+  } catch (error) {
+    logger.info(error);
+
+    throw Boom.forbidden('Invalid refresh token');
+  }
 };

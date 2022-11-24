@@ -48,3 +48,17 @@ export const userLogin = (req: Request, res: Response, next: NextFunction) => {
     .then((data) => res.json(data))
     .catch((err) => next(err));
 };
+
+/**
+ * Refresh token
+ * @param  {Request} req
+ * @param  {Response} res
+ * @param  {NextFunction} next
+ */
+export const refreshToken = (req: Request, res: Response, next: NextFunction) => {
+  const { refreshToken } = req.body;
+  userService
+    .generateToken(refreshToken)
+    .then((data) => res.json(data))
+    .catch((err) => next(err));
+};

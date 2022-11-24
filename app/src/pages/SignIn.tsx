@@ -31,6 +31,7 @@ export default function SignIn(): ReactElement {
             api.signin(email, password)
                 .then((res) => {
                     localStorage.setItem("token", res.data.data.accessToken);
+                    localStorage.setItem("refreshToken", res.data.data.refreshToken);
                     navigate("../", { replace: true });
                 })
                 .catch((err) => {

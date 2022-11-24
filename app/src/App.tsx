@@ -5,13 +5,12 @@ import Home from "./pages/Home";
 import Signup from "./pages/Signup";
 import SignIn from "./pages/SignIn";
 import AppLayout from "./components/layout/AppLayout";
-import jwtInterceptor from "./_helpers/jwt.interceptor";
 import AddPractitioner from "./pages/AddPractitioner";
 import UpdatePractitioner from "./pages/UpdatePractitioner";
+import LogOut from "./pages/LogOut";
+import PageNotFound from "./pages/PageNotFound";
 
 function App() {
-    jwtInterceptor(); // axios request interceptor
-
     return (
         <div className="App">
             <Routes>

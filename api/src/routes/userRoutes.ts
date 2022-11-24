@@ -16,6 +16,11 @@ router.post('/signup', userValidator, userController.createUser);
 router.post('/signin', userValidator, userController.userLogin);
 
 /**
+ * post /api/signin
+ */
+router.post('/refresh', userController.refreshToken);
+
+/**
  * get /api/users
  */
 router.get('/users', userController.getAllUsers);

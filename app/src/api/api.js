@@ -10,6 +10,7 @@ export const signup = (email, password) => {
 
 export const logout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("refreshToken");
 };
 
 export const getPractitioners = () => {
