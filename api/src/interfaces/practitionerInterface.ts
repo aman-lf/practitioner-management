@@ -9,7 +9,7 @@ export interface PractitionerInterface {
   end_time: string;
   is_specialist: boolean;
   photo: string;
-  specialization: string[];
+  specialization: string | string[];
 }
 
 export type PractitionerToCreate = Omit<PractitionerInterface, 'id'>;

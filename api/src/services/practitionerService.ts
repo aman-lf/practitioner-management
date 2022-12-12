@@ -2,7 +2,7 @@ import Boom from '@hapi/boom';
 
 import Practitioner from '../models/practitioner';
 import { upload } from '../firebase';
-import { PractitionerInterface, PractitionerToCreate } from '../interfaces/PractitionerInterface';
+import { PractitionerInterface, PractitionerToCreate } from '../interfaces/practitionerInterface';
 
 const uploadImage = (file, name): string => {
   const ext = file.originalname.split('.').pop();
@@ -69,7 +69,7 @@ export const updatePractitioner = async (
   let practitionerUpdated = practitioner;
   // converting string to json
   if (practitioner['specialization'])
-    practitionerUpdated['specialization'] = JSON.parse(practitioner['specialization'].toString());
+    practitionerUpdated['specialization'] = JSON.stringify(practitioner['specialization']);
   if (file) {
     const filename = uploadImage(file, practitioner.name);
     practitionerUpdated = { ...practitioner, photo: filename };
